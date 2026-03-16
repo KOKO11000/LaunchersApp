@@ -2,6 +2,7 @@ import express from "express";
 import { addNew, deleteOne, findOneById, getAll } from "../CRUD/mongoDB.js";
 import {
   addNewLauncher,
+  deleteOneById,
   findLauncherById,
   getAllDataEndpoint,
 } from "../ctrls/launchers.js";
@@ -25,21 +26,10 @@ const collectName = "launchers";
 
 router.get("/launchers", getAllDataEndpoint);
 
-router.get("/launchers/id", findLauncherById);
+router.get("/launchers/:id", findLauncherById);
 
 router.post("/launchers", addNewLauncher);
 
-router.delete("/launchers/:id", async (req, res) => {
-  try {
-    const  {id}  = req.params;
-    const deleteLauncher = await deleteOne(collectName, id);
-    if (!deleteLauncher) {
-      return res.status(401).json({ ErrMsg: "Launcher not found" });
-    }
-    res.json({ msg: "launcher deleted Successful!!!" });
-  } catch (error) {
-    console.error(error.message)
-    res.status(500).json({ ErrMsg: "Srever Failed!" });
-  }
-});
+router.delete("/launchers/:id", deleteOneById);
 export default router;
+
