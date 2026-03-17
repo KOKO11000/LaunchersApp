@@ -22,7 +22,7 @@ const collecName = "users";
 
 routerA.post(
   "/register/create",
-  verifyValidToken,
+  
   checkUserTypeAdmin,
   createNewUser,
 );
@@ -34,7 +34,7 @@ routerA.post("/login", verifyUsernameAndPass, loginUser);
 
 routerA.get("/getUser", async (req, res) => {
   try {
-    
+
   } catch (error) {
     console.error(error.message);
     res.status(500);
