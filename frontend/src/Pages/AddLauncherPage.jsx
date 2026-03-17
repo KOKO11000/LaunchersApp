@@ -7,7 +7,7 @@ export default function AddLauncherPage() {
     <div>
       <Header title={"Add Launcher"}  />
       <Form/>
-      AddLauncherPage
+   
     </div>
   );
 }

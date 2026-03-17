@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
 
-export default function Header({ title }) {
+export default function Header({ title,addLaunchNav,detailNav,regiterNav }) {
   const navigate = useNavigate();
 
   return (
@@ -24,6 +24,12 @@ export default function Header({ title }) {
           onClick={() => navigate("/lancherDetails")}
         >
           Details
+        </button>
+        <button
+          className="hover: bg-linear-to-bl hover:from-orange-400 hover:to-yellow-200 p-1.5 rounded-md hover:cursor-pointer"
+          onClick={() => navigate("/register")}
+        >
+          Register
         </button>
       </div>
     </div>
