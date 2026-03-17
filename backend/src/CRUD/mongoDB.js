@@ -33,11 +33,15 @@ export async function addNew(collectionName, data = {}) {
   }
 }
 
-export async function updateByID(collectionName, data = {}) {
+export async function updateByID(collectionName, id, data = {}) {
   try {
     const result = await db
       .collection(collectionName)
-      .findOneAndUpdate({ $set: data });
+      .findOneAndUpdate(
+        { _id: new ObjectId(id) },
+        { $set: data },
+        { returnDocument: "after" },
+      );
     return result;
   } catch (error) {
     console.error(error.message);
