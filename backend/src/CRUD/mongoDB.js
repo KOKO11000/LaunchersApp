@@ -22,6 +22,15 @@ export async function getAll(collectionName) {
     throw new Error(error.message);
   }
 }
+export async function getOne(collectionName, username) {
+  try {
+    const result = await db.collection(collectionName).findOne({username});
+    return result;
+  } catch (error) {
+    console.error(error.message);
+    throw new Error(error.message);
+  }
+}
 
 export async function addNew(collectionName, data = {}) {
   try {

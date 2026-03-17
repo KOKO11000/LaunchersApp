@@ -7,6 +7,7 @@ export async function hashPass(password) {
     console.error(error);
   }
 }
+
 export async function comparePass(originalPassword, hashPass) {
   try {
     return await compare(originalPassword, hashPass);

@@ -14,9 +14,6 @@ export async function createNewUser(req, res) {
     const hashPassword = await hashPass(password);
     if (!hashPassword) res.status(401).json("Hash Password not Success!");
 
-    const token = await getToken({ username, user_type, hashPassword });
-    if (!token) res.status(401).json({ ErrMsg: "Not get Token" });
-
     const userTypeExists = await getAll(collecName);
     userTypeExists.find((e) => {
       if (e.user_type === user_type) {
@@ -29,8 +26,7 @@ export async function createNewUser(req, res) {
       password: hashPassword,
       email: email || "email@example.com",
       user_type,
-      createdAt: new Date().toLocaleDateString(),
-      token: { token },
+      last_login: new Date().toLocaleDateString(),
     };
 
     const addToDB = await addNew(collecName, newUser);
@@ -66,6 +62,20 @@ export async function deleteOneByIdEndpoint(req, res) {
     const deleted = await deleteOne(collecName, id);
 
     res.json({ msg: "DELETED Successfully!", deleted });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500);
+  }
+}
+
+export async function loginUser(req, res) {
+  try {
+    const { username } = req.body;
+
+    const token = await getToken({ username, user_type: req.dbUser.user_type });
+    if (!token) res.status(401).json({ ErrMsg: "Not get Token" });
+    const last_login = new Date()
+    res.json({ token,last_login, msg: "Logining..." });
   } catch (error) {
     console.error(error.message);
     res.status(500);
