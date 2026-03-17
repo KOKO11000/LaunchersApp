@@ -4,8 +4,8 @@ import { getToken } from "../utils/token.js";
 const collecName = "users";
 export async function createNewUser(req, res) {
   try {
-    const { username, password, email, user_type } = req.body;
-    if (!username || !password || !user_type) {
+    const { username, password, email, userType } = req.body;
+    if (!username || !password || !userType) {
       res
         .status(401)
         .json({ ErrMsg: "password or Username or user_type are missing!!!" });
@@ -16,7 +16,7 @@ export async function createNewUser(req, res) {
 
     const userTypeExists = await getAll(collecName);
     userTypeExists.find((e) => {
-      if (e.user_type === user_type) {
+      if (e.user_type === userType) {
         return res.status(409).json({ msg: "Usre type already exists" });
       }
     });
@@ -25,7 +25,7 @@ export async function createNewUser(req, res) {
       username,
       password: hashPassword,
       email: email || "email@example.com",
-      user_type,
+      userType,
       last_login: new Date().toLocaleDateString(),
     };
 

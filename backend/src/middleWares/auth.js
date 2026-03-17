@@ -4,9 +4,10 @@ import { verifyToken } from "../utils/token.js";
 
 const collecName = "users";
 export async function checkUserTypeAdmin(req, res, next) {
+    console.log(req.body)
   try {
-    const { user_type } = req.user;
-    if (user_type !== "admin") {
+    const { userType } = req.body;
+    if (userType === "admin") {
       res.status(401).json({
         ErrMsg: "User-type should by Admin ",
       });
@@ -14,7 +15,7 @@ export async function checkUserTypeAdmin(req, res, next) {
       return next();
     }
   } catch (error) {
-    console.error(error.message);
+    console.error("checkUserTypeAdmin:",error.message);
     res.status(500).json(error.message);
   }
 }
