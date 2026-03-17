@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-export async function getToken() {
+export async function getToken(data) {
   try {
     const payload = { ...data };
     const token = jwt.sign(payload, process.env.ADMIN_TOKEN, {
@@ -9,19 +9,17 @@ export async function getToken() {
     return token;
   } catch (error) {
     console.error(error);
+    return null
   }
 }
 
 
-export async function verifyToken() {
+export async function verifyToken(token) {
     try {
-        const verify = jwt.verify(token,process.env.ADMIN_TOKEN,(err)=>{
-            if (err) {
-                console.error(err)
-            }
-        })
-        return verify
+        const decoded = jwt.verify(token,process.env.ADMIN_TOKEN)
+        return decoded
     } catch (error) {
-        console.error(error)
+        console.error("Err",error.message)
+        return null
     }
 }

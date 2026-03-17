@@ -1,6 +1,7 @@
 import express, { json } from "express";
 import cors from "cors";
 import router from "./routers/router.js";
+import routerA from "./routers/routerAuth.js";
 
 const app = express();
 const port = 5000;
@@ -16,6 +17,7 @@ app.get("/health",(_,res)=>{
 })
 
 app.use("/api",router)
+app.use("/api/auth",routerA)
 
 app.listen(port, () => {
   console.log(`Server run on http://localhost:${port} `);
