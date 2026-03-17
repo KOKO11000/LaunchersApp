@@ -6,39 +6,35 @@ import { addNew, deleteOne, getAll, updateByID } from "../CRUD/mongoDB.js";
 import {
   createNewUser,
   deleteOneByIdEndpoint,
+  loginUser,
   updateOne,
 } from "../ctrls/auth.js";
-import { verifyValidToken } from "../middleWares/auth.js";
-const routerA = express.Router();
-const collecName = "users";
-// id ●
-// username ●
-// password ●
-// email ●
-// user_type ●
-// last_login ●
+import {
+  checkUserTypeAdmin,
+  verifyUsernameAndPass,
+  verifyValidToken,
+} from "../middleWares/auth.js";
+import { comparePass } from "../utils/bcrypt.js";
 
-routerA.post("/register/create", createNewUser);
+const routerA = express.Router();
+
+const collecName = "users";
+
+routerA.post(
+  "/register/create",
+  verifyValidToken,
+  checkUserTypeAdmin,
+  createNewUser,
+);
 routerA.put("/register/update", verifyValidToken, updateOne);
 routerA.delete("/register/delete/:id", verifyValidToken, deleteOneByIdEndpoint);
 
-routerA.post("/login", verifyValidToken, async (req, res) => {
-  try {
-    const { username, password } = req.body;
-  } catch (error) {
-    console.error(error.message);
-    res.status(500);
-  }
-});
+routerA.post("/login", verifyUsernameAndPass, loginUser);
+
+
 routerA.get("/getUser", async (req, res) => {
   try {
-  } catch (error) {
-    console.error(error.message);
-    res.status(500);
-  }
-});
-routerA.get("/register", async (req, res) => {
-  try {
+    
   } catch (error) {
     console.error(error.message);
     res.status(500);

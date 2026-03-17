@@ -19,7 +19,7 @@ export async function verifyToken(token) {
         const decoded = jwt.verify(token,process.env.ADMIN_TOKEN)
         return decoded
     } catch (error) {
-        console.error("Err",error.message)
+        console.error("Err verufy token",error.message)
         return null
     }
 }
